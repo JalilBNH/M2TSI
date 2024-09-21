@@ -1,5 +1,5 @@
 # Jalil Tp2
-# Git repository to see more details : https://github.com/JalilBNH/M2TSI/tree/main/tp2
+# Git repository to see more details and download the different features and target stubs: https://github.com/JalilBNH/M2TSI/tree/main/tp2
 
 
 import numpy as np
