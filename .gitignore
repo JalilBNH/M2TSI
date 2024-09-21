@@ -1,2 +1,11 @@
-/tpenv
-/tp2/datasets
+tpenv
+tp2/datasets/Movies/ernest_celestine_01
+tp2/datasets/Movies/ernest_celestine_02
+tp2/datasets/Movies/toy_story_1_01
+tp2/datasets/Movies/toy_story_1_02
+tp2/datasets/Movies/toy_story_2_01
+tp2/datasets/Movies/toy_story_2_02
+tp2/datasets/Movies/toy_story_3_01
+tp2/datasets/Movies/toy_story_3_02
+tp2/datasets/Movies/dataset_01.npy
+tp2/datasets/Movies/dataset_02.npy
