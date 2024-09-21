@@ -16,7 +16,17 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 
 def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, save_stub=False):
-    
+    """Given a directory containing all our datasets, return our train and validation data in 2 numpy array.
+
+    Args:
+        datasets_dir (str): path/to/dataset_dir
+        multi_class (bool, optional): Choose if you do multi-class or binary classification. Defaults to True.
+        read_from_stubs (bool, optional): Read data from npy file (faster). Defaults to False.
+        save_stub (bool, optional): Save a npy file. Defaults to False.
+
+    Returns:
+        np.array: train and validation datasets in np.array
+    """
     if read_from_stubs and (os.path.exists(os.path.join(datasets_dir, 'dataset_01.npy')) and os.path.exists(os.path.join(datasets_dir, 'dataset_02.npy'))):
         with open(os.path.join(datasets_dir, 'dataset_01.npy'), 'rb') as f:
             dataset_01 = np.load(f)
@@ -69,10 +79,26 @@ def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, save_st
 
 
 def extract_simple_features(image):
+    """Given an image, return the mean of each channel.
+
+    Args:
+        image (np.array): image in np.array format
+
+    Returns:
+        np.array: the mean of each channel
+    """
     return np.array([np.mean(image[:,:,0]), np.mean(image[:,:,1]), np.mean(image[:,:,2])])
 
 
 def extract_features(image):
+    """Given an image, return a feature vector.
+
+    Args:
+        image (np.array): image in np.array format
+
+    Returns:
+        np.array: feature vector
+    """
     
     image_gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     epsilon = 1e-10 
@@ -91,6 +117,19 @@ def extract_features(image):
     ])
 
 def create_features_vector(dataset_01=None, dataset_02=None, complex_features=True, read_from_stubs=False, save_stubs=False, stub_path=None):
+    """Given our datasets return the features vector.
+
+    Args:
+        dataset_01 (np.array, optional): dataset in np.array format. Optional if you read from stubs. Defaults to None.
+        dataset_02 (np.array, optional): dataset in np.array format. Optional if you read from stubs. Defaults to None.
+        complex_features (bool, optional): Choose between the extract_simple_features or extract_features. Defaults to True.
+        read_from_stubs (bool, optional): Read data from npy file (faster). Defaults to False.
+        save_stubs (bool, optional): Save data in a npy file. Defaults to False.
+        stub_path (_type_, optional): path/to/npy_file. Defaults to None.
+
+    Returns:
+        np.array: features matrix
+    """
     if read_from_stubs and os.path.exists(os.path.join(stub_path, 'features_01.npy')) and os.path.exists(os.path.join(stub_path, 'features_02.npy')):
         with open(os.path.join(stub_path, 'features_01.npy'), 'rb') as f:
             features_01 = np.load(f)
@@ -121,7 +160,19 @@ def create_features_vector(dataset_01=None, dataset_02=None, complex_features=Tr
     return features_01, features_02
 
 def create_target_vector(features_01=None, features_02=None, mult_class=True, save_stub=False, read_from_stubs=False, stub_path=None):
-    
+    """Given the features matrix return the targets vectors.
+
+    Args:
+        features_01 (np.array, optional): Features matrix. Defaults to None.
+        features_02 (np.array, optional): Features matrix. Defaults to None.
+        mult_class (bool, optional): Choose to do binary or mult-class classification. Defaults to True.
+        save_stub (bool, optional): Save data in a npy file. Defaults to False.
+        read_from_stubs (bool, optional): Read data from npy file (faster). Defaults to False.
+        stub_path (_type_, optional): path/to/npy_file. Defaults to None.
+
+    Returns:
+        np.array: target vectors
+    """
     if read_from_stubs and os.path.exists(os.path.join(stub_path, 'target_01.npy')) and os.path.exists(os.path.join(stub_path, 'target_02.npy')):
         with open(os.path.join(stub_path, 'target_01.npy'), 'rb') as f:
             target_01 = np.load(f)
@@ -154,6 +205,15 @@ def create_target_vector(features_01=None, features_02=None, mult_class=True, sa
     return target_01, target_02
 
 def create_model(complex_features=True, mult_class=True):
+    """Create the DNN model.
+
+    Args:
+        complex_features (bool, optional): Choose between complex features or simple features. Defaults to True.
+        mult_class (bool, optional): Choose to do binary or mult-class classification. Defaults to True.
+
+    Returns:
+        keras.model: DNN Model
+    """
     
     if complex_features:
         input = Input(shape=(24,))
@@ -176,7 +236,9 @@ def create_model(complex_features=True, mult_class=True):
 
 def main():
     
-
+    
+    #dataset_01, dataset_02 = load_datasets()
+    #features_01, features_02 = create_features_vector():
     
     features_01, features_02 = create_features_vector(
         read_from_stubs=True,
