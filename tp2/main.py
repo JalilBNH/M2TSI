@@ -1,5 +1,8 @@
 # Jalil Tp2
 # Git repository to get more details with the dev jupyter notebook and download the features and target stubs to run the code faster: https://github.com/JalilBNH/M2TSI/tree/main/tp2
+# Excel sheet legend :  - bin = binary classification
+#                       - mutl = multi-class classification
+#                       - simple = 3 features to train the model (else 24 features used)
 
 
 import numpy as np
