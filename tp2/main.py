@@ -231,6 +231,8 @@ def create_model(complex_features=True, mult_class=True):
         output = Dense(units=1, activation='sigmoid')(x)
     
     return Model(input, output)
+
+    
         
 
 
@@ -238,7 +240,7 @@ def main():
     
     
     #dataset_01, dataset_02 = load_datasets()
-    #features_01, features_02 = create_features_vector():
+    #features_01, features_02 = create_features_vector()
     
     features_01, features_02 = create_features_vector(
         read_from_stubs=True,
