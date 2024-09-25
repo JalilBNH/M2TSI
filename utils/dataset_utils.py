@@ -1,8 +1,8 @@
 import os 
-import numpy as np
 import cv2
+import numpy as np
 
-def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, stub_path=None, save_stub=False):    
+def load_datasets(datasets_dir, multi_class=True, new_shape=(270, 460), read_from_stubs=False, stub_path=None, save_stub=False):    
     """Given a directory containing all our datasets, return our train and validation data in 2 numpy array.
 
     Args:
@@ -40,9 +40,9 @@ def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, stub_pa
                 train_total_size  += len(os.listdir(os.path.join(datasets_dir, folder)))
             elif folder.endswith('02'):
                 test_total_size += len(os.listdir(os.path.join(datasets_dir, folder)))
-    dataset_01_train = np.empty(shape=(int(0.8*train_total_size), 540, 920, 3), dtype=np.float32)
-    dataset_01_val = np.empty(shape=(int(0.2*train_total_size), 540, 920, 3), dtype=np.float32)
-    dataset_02 = np.empty(shape=(test_total_size, 540, 920, 3), dtype=np.float32)
+    dataset_01_train = np.empty(shape=(int(0.8*train_total_size), new_shape[0], new_shape[1], 3), dtype=np.float32)
+    dataset_01_val = np.empty(shape=(int(0.2*train_total_size), new_shape[0], new_shape[1], 3), dtype=np.float32)
+    dataset_02 = np.empty(shape=(test_total_size, new_shape[0], new_shape[1], 3), dtype=np.float32)
     
     idx_test = 0
     idx_train = 0
@@ -54,16 +54,16 @@ def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, stub_pa
         len_folder = len(os.listdir(os.path.join(datasets_dir, folder)))  
         if folder.endswith('01'):
             for i, file in enumerate(os.listdir(os.path.join(datasets_dir, folder))[:int(0.8*len_folder)]):
-                dataset_01_train[i+idx_train] = cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0
+                dataset_01_train[i+idx_train] = cv2.resize(cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0, new_shape[::-1])
             idx_train += int(0.8*len_folder)
             for i, file in enumerate(os.listdir(os.path.join(datasets_dir, folder))[int(0.8*len_folder):]):
-                dataset_01_val[i+idx_test] = cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0
+                dataset_01_val[i+idx_test] = cv2.resize(cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0, new_shape[::-1])
             idx_test += int(0.2*len_folder)
         if folder.endswith('02'):
             for file in os.listdir(os.path.join(datasets_dir, folder)):
-                dataset_02[idx_val] = cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0
+                dataset_02[idx_val] = cv2.resize(cv2.imread(os.path.join(datasets_dir, folder, file)) / 255.0, new_shape[::-1])
                 idx_val += 1
-                           
+                          
     if save_stub:
         with open(os.path.join(stub_path, 'ds_01_train.npy'), 'wb') as f:
             np.save(f, dataset_01_train)
@@ -73,4 +73,3 @@ def load_datasets(datasets_dir, multi_class=True, read_from_stubs=False, stub_pa
             np.save(f, dataset_02)
             
     return dataset_01_train, dataset_01_val, dataset_02
-    
