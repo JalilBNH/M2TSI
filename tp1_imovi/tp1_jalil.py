@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 # 1.4 
 
-# Question 1
+# Question 1 : 
 
 l1 = np.array([[1, 1, -5]])
 l2 = np.array([[4, -5, 7]])
@@ -19,7 +19,7 @@ print(f'x_cart : {x_cart}')
 
     
 
-# Question 2
+# Question 2 : 
 
 l1 = np.array([[1, 2, 1]])
 l2 = np.array([[3, 6, -2]])
@@ -28,7 +28,7 @@ x = np.cross(l1, l2)
 print(f'x : {x}')
 # Notre point se forme à l'infini car notre coordonné homogène = 0
 
-# Question 3
+# Question 3 : 
 
 pt1 = [[1, 3, 1]] # On ajoute les coordonnées homogènes
 pt2 = [[2, 7, 1]]
