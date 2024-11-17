@@ -61,7 +61,7 @@ def evaluate(P, P_dlt):
     print(f'Mean error : {np.mean(error)}')
     print(f'Std error : {np.std(error)}')
 
-nb_pts = 8
+nb_pts = 50
 
 Rx = 0.8 * np.pi/2
 Ry = -1.8 * np.pi/2
@@ -121,5 +121,5 @@ pts_2D_noise = pts_2D + noise
 pts_2D_noise = np.vstack((pts_2D_noise, np.ones((1, pts_2D_noise.shape[1]))))
 
 P_dlt_noise = dlt(pts_3D.T, pts_2D_noise)
-print('---------------------------------')
+print('---------- Noise -------------')
 evaluate(P, P_dlt_noise)
