@@ -22,22 +22,17 @@ inlier_l1 = np.array([l1[i] for i in range(len(l1)) if mask[i]])
 inlier_l2 = np.array([l2[i] for i in range(len(l2)) if mask[i]])
 retval, R, t, mask_pose, pts_3d_h = cv2.recoverPose(E, inlier_l1, inlier_l2, K, distanceThresh=100)
 pts_3d = pts_3d_h / pts_3d_h[3, :]
-Z = pts_3d[2, :]
-mask_pts = (pts_3d[2, :] >= np.percentile(Z, 5)) & (pts_3d[2, :]  <= np.percentile(Z, 95))
+mask_pts = (pts_3d[2, :] >= np.percentile(pts_3d[2, :], 5)) & (pts_3d[2, :]  <= np.percentile(pts_3d[2, :], 95))
 new_pts_3d = pts_3d[:, mask_pts]
 new_l1 = inlier_l1[mask_pts]
 new_l2 = inlier_l2[mask_pts]
 
-Z = new_pts_3d[2,:]
-
 plt.figure(figsize=(12,14))
-plt.imshow(img01), plt.axis('off')
-plt.scatter(new_l1[:, 0], new_l1[:, 1], c=Z, s=7, cmap='jet_r') 
+plt.imshow(img01), plt.axis('off'), plt.scatter(new_l1[:, 0], new_l1[:, 1], c=new_pts_3d[2,:], s=7, cmap='jet_r') 
 plt.tight_layout()
 plt.show()
 plt.figure(figsize=(12,14))
-plt.imshow(img02), plt.axis('off')
-plt.scatter(new_l2[:, 0], new_l2[:, 1], c=Z, s=7, cmap='jet_r') 
+plt.imshow(img02), plt.axis('off'), plt.scatter(new_l2[:, 0], new_l2[:, 1], c=new_pts_3d[2,:], s=7, cmap='jet_r') 
 plt.tight_layout()
 plt.show()
 
