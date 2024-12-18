@@ -36,15 +36,17 @@ for ind1, ind2 in indices:
     new_l2 = inlier_l2[mask_pts]
 
     Z = new_pts_3d[2,:]
+    
+    os.makedirs(f'./tp7_imovi/images_tp7_Jalil/couple_img_{count}', exist_ok=True)
 
     plt.figure(figsize=(12,14))
     plt.imshow(img01), plt.axis('off'), plt.title(f'image : {ind1}')
     plt.scatter(new_l1[:, 0], new_l1[:, 1], c=Z, s=7, cmap='jet_r') 
-    plt.savefig(f'./tp7_imovi/images_tp7_Jalil/img_{count}.png', bbox_inches='tight')
-    count += 1
+    plt.savefig(f'./tp7_imovi/images_tp7_Jalil/couple_img_{count}/img_{ind1}.png', bbox_inches='tight')
+    
     plt.figure(figsize=(12,14))
     plt.imshow(img02), plt.axis('off'), plt.title(f'image : {ind2}')
     plt.scatter(new_l2[:, 0], new_l2[:, 1], c=Z, s=7, cmap='jet_r') 
-    plt.savefig(f'./tp7_imovi/images_tp7_Jalil/img_{count}.png', bbox_inches='tight')
+    plt.savefig(f'./tp7_imovi/images_tp7_Jalil/couple_img_{count}/img_{ind2}.png', bbox_inches='tight')
     count += 1
 
